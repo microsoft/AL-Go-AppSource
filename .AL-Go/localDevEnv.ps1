@@ -87,23 +87,41 @@ if (-not $credential) {
 }
 
 if (-not $licenseFileUrl) {
-    if ($settings.type -eq "AppSource App") {
-        $description = "When developing AppSource Apps, your local development environment needs the developer licensefile with permissions to your AppSource app object IDs"
-        $default = ""
-    }
-    else {
-        $description = "When developing PTEs, you can optionally specify a developer licensefile with permissions to object IDs of your dependant apps"
-        $default = "none"
+    if ($settings.keyVaultName -and $settings.LicenseFileUrlSecretName) {
+        try {
+            $secret = Get-AzKeyVaultSecret -VaultName $settings.keyVaultName -Name $settings.LicensefileUrlSecretName
+            # handling different versions of Az.KeyVault
+            if (($secret | Get-Member).Name.Contains('SecretValueText')) {
+                $licenseFileUrl = $secret.SecretValueText
+            }
+            else {
+                $licenseFileUrl = (New-Object PSCredential "user",$secret.SecretValue).GetNetworkCredential().Password
+            }
+        }
+        catch {
+            Write-Host
+        }
     }
 
-    $licenseFileUrl = Enter-Value `
-        -title "LicenseFileUrl" `
-        -description $description `
-        -question "Local path or a secure download URL to license file " `
-        -default $default
+    if (-not $licenseFileUrl) {
+        if ($settings.type -eq "AppSource App") {
+            $description = "When developing AppSource Apps, your local development environment needs the developer licensefile with permissions to your AppSource app object IDs"
+            $default = ""
+        }
+        else {
+            $description = "When developing PTEs, you can optionally specify a developer licensefile with permissions to object IDs of your dependant apps"
+            $default = "none"
+        }
 
-    if ($licenseFileUrl -eq "none") {
-        $licenseFileUrl = ""
+        $licenseFileUrl = Enter-Value `
+            -title "LicenseFileUrl" `
+            -description $description `
+            -question "Local path or a secure download URL to license file " `
+            -default $default
+
+        if ($licenseFileUrl -eq "none") {
+            $licenseFileUrl = ""
+        }
     }
 }
 
