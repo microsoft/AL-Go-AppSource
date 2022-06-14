@@ -19,3 +19,4 @@ rad.json
 .snapshots/
 cache_*
 ~$*
+NewBcContainer.ps1

@@ -1,4 +1,13 @@
 {
   "type": "AppSource App",
-  "templateUrl": "https://github.com/microsoft/AL-Go-AppSource@main"
+  "templateUrl": "https://github.com/microsoft/AL-Go-AppSource@main",
+  "appDependencyProbingPaths": [
+    {
+      "repo": "https://github.com/nav-x-llc/nav-x-library",
+      "version": "latest",
+      "release_status": "release",
+      "projects": "*",
+      "AuthTokenSecret": "githubToken"
+    }
+  ]
 }

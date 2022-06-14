@@ -1,9 +1,10 @@
 {
-  "country": "us",
-  "appSourceCopMandatoryAffixes": [
-    "<affix>"
-  ],
-  "appFolders": [],
-  "testFolders": [],
-  "bcptTestFolders": []
+    "country":  "us",
+    "appSourceCopMandatoryAffixes":  [
+        "NAVX"
+    ],
+    "appFolders":  [
+    ],
+    "testFolders":  [
+    ]
 }
