@@ -1,10 +1,26 @@
 {
     "country":  "us",
-    "AppSourceCopMandatoryAffixes":  [
-        "<affix>"
+    "keyVaultName": "nav-x-development",
+    "licenseFileUrlSecretName": "LicenseFile",
+    "codeSignCertificateUrlSecretName": "CodeSignPfxFile",
+    "codeSignCertificatePasswordSecretName": "CodeSignPfxPassword",
+    "storageContextSecretName": "StorageContext",
+    "insiderSasTokenSecretName": "InsiderToken",
+    "ghTokenWorkflowSecretName": "ghTokenWorkflow",
+    "appSourceCopMandatoryAffixes":  [
+        "NAVX"
     ],
     "appFolders":  [
     ],
     "testFolders":  [
+    ],
+    "appDependencyProbingPaths": [
+        {
+            "repo": "nav-x-llc/nav-x-library",
+            "version": "latest",
+            "release_status": "release",
+            "projects": "*",
+            "AuthTokenSecret": "githubToken"
+        }
     ]
 }

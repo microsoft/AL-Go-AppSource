@@ -1,4 +1,7 @@
 {
     "type":  "AppSource App",
-    "templateUrl":  "https://github.com/microsoft/AL-Go-AppSource@main"
+    "templateUrl":  "https://github.com/nav-x-llc/NAV-X-AL-Go-AppSource@main",
+    "nextMajorSchedule": "0 0 1 * *",
+    "nextMinorSchedule": "0 1 1 * *",
+    "gitHubRunner": "self-hosted"
 }
