@@ -1,4 +1,4 @@
-#
+﻿#
 # Script for creating local development environment
 # Please do not modify this script as it will be auto-updated from the AL-Go Template
 # Recommended approach is to use as is or add a script (freddyk-devenv.ps1), which calls this script with the user specific parameters
@@ -32,6 +32,21 @@ function DownloadHelperFile {
 }
 
 try {
+$webClient = New-Object System.Net.WebClient
+$webClient.CachePolicy = New-Object System.Net.Cache.RequestCachePolicy -argumentList ([System.Net.Cache.RequestCacheLevel]::NoCacheNoStore)
+$webClient.Encoding = [System.Text.Encoding]::UTF8
+Write-Host "Downloading GitHub Helper module"
+$GitHubHelperPath = "$([System.IO.Path]::GetTempFileName()).psm1"
+$webClient.DownloadFile('https://raw.githubusercontent.com/microsoft/AL-Go-Actions/main/Github-Helper.psm1', $GitHubHelperPath)
+Write-Host "Downloading AL-Go Helper script"
+$ALGoHelperPath = "$([System.IO.Path]::GetTempFileName()).ps1"
+$webClient.DownloadFile('https://raw.githubusercontent.com/microsoft/AL-Go-Actions/main/AL-Go-Helper.ps1', $ALGoHelperPath)
+
+Import-Module $GitHubHelperPath
+. $ALGoHelperPath -local
+
+$baseFolder = Join-Path $PSScriptRoot ".." -Resolve
+
 Clear-Host
 Write-Host
 Write-Host -ForegroundColor Yellow @'
@@ -147,6 +162,9 @@ CreateDevEnv `
     -licenseFileUrl $licenseFileUrl `
     -accept_insiderEula:$accept_insiderEula `
     -clean:$clean
+}
+catch {
+    Write-Host -ForegroundColor Red "Error: $($_.Exception.Message)`nStacktrace: $($_.scriptStackTrace)"
 }
 catch {
     Write-Host -ForegroundColor Red "Error: $($_.Exception.Message)`nStacktrace: $($_.scriptStackTrace)"
