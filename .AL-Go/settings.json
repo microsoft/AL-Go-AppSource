@@ -1,5 +1,6 @@
 {
     "country":  "us",
+    "repoVersion": "",
     "keyVaultName": "nav-x-development",
     "licenseFileUrlSecretName": "LicenseFile",
     "codeSignCertificateUrlSecretName": "CodeSignPfxFile",
@@ -7,7 +8,7 @@
     "storageContextSecretName": "StorageContext",
     "insiderSasTokenSecretName": "InsiderToken",
     "ghTokenWorkflowSecretName": "ghTokenWorkflow",
-    "appSourceCopMandatoryAffixes":  [
+    "AppSourceCopMandatoryAffixes":  [
         "NAVX"
     ],
     "appFolders":  [
@@ -16,11 +17,12 @@
     ],
     "appDependencyProbingPaths": [
         {
-            "repo": "nav-x-llc/nav-x-library",
+            "repo": "https://github.com/nav-x-llc/nav-x-library",
             "version": "latest",
             "release_status": "release",
             "projects": "*",
             "AuthTokenSecret": "githubToken"
         }
-    ]
+    ],
+    "versioningStrategy": 16
 }
