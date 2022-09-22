@@ -40,6 +40,7 @@ jobs:
 
   Build:
     needs: [ Initialization ]
+    if: ${{ needs.Initialization.outputs.projectCount > 0 }}
     runs-on: ${{ fromJson(needs.Initialization.outputs.githubRunner) }}
     strategy:
       matrix:
@@ -136,4 +137,3 @@ jobs:
         with:
           eventId: "DO0099"
           telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-
