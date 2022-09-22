@@ -121,6 +121,38 @@ jobs:
           getEnvironments: '*'
           type: 'CD'
 
+      - name: Read secrets
+        uses: microsoft/AL-Go-Actions/ReadSecrets@preview
+        env:
+          secrets: ${{ toJson(secrets) }}
+        with:
+          settingsJson: ${{ env.Settings }}
+          secrets: 'StorageContext,AppSourceContext'
+
+      - name: Determine Delivery Targets
+        id: DetermineDeliveryTargets
+        run: |
+          $deliveryTargets = @()
+          if ($env:StorageContext) {
+            $deliveryTargets += @("Storage")
+          }
+          if ($env:type -eq "AppSource App" -and $env:AppSourceContinuousDelivery -eq "true") {
+            if ($env:AppSourceContext) {
+              $deliveryTargets += @("AppSource")
+            }
+          }
+          Get-Item -Path (Join-Path $ENV:GITHUB_WORKSPACE ".github\DeliverTo*.ps1") | ForEach-Object {
+            $deliveryTargets += @([System.IO.Path]::GetFileNameWithoutExtension($_.Name.SubString(9)))
+          }
+          $deliveryTargets = $deliveryTargets | Select-Object -unique
+          $deliveryTargetsJson = $deliveryTargets | ConvertTo-Json -Depth 99 -compress
+          if ($deliveryTargets.Count -lt 2) { $deliveryTargetsJson = "[$($deliveryTargetsJson)]" }
+          Write-Host "::set-output name=DeliveryTargetsJson::$deliveryTargetsJson"
+          Write-Host "set-output name=DeliveryTargetsJson::$deliveryTargetsJson"
+          Write-Host "::set-output name=DeliveryTargetCount::$($deliveryTargets.Count)"
+          Write-Host "set-output name=DeliveryTargetCount::$($deliveryTargets.Count)"
+          Add-Content -Path $env:GITHUB_ENV -Value "DeliveryTargets=$deliveryTargetsJson"
+
   CheckForUpdates:
     needs: [ Initialization ]
     runs-on: [ windows-latest ]
