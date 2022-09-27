@@ -1,4 +1,5 @@
 # AL-Go Template
+
 ## AppSource App Project
 This template repository can be used for managing AppSource Apps for Business Central.
 
