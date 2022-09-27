@@ -1,8 +1,6 @@
 ﻿name: Test Next Minor
 
 on:
-  schedule:
-  - cron: '0 1 1 * *'
   workflow_dispatch:
 
 permissions:
@@ -27,21 +25,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0100"
 
       - name: Read settings
         id: ReadSettings
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSettings@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSettings@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           getProjects: 'Y'
@@ -64,21 +54,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Read settings
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSettings@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSettings@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
           project: ${{ matrix.project }}
 
       - name: Read secrets
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSecrets@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSecrets@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         env:
           secrets: ${{ toJson(secrets) }}
         with:
@@ -87,11 +69,7 @@ jobs:
           secrets: 'licenseFileUrl,insiderSasToken,CodeSignCertificateUrl,CodeSignCertificatePassword,KeyVaultCertificateUrl,KeyVaultCertificatePassword,KeyVaultClientId'
 
       - name: Run pipeline
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/RunPipeline@preview
-=======
         uses: microsoft/AL-Go-Actions/RunPipeline@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
           Project: ${{ matrix.project }}
@@ -138,11 +116,7 @@ jobs:
 
       - name: Cleanup
         if: always()
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/PipelineCleanup@preview
-=======
         uses: microsoft/AL-Go-Actions/PipelineCleanup@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
           Project: ${{ matrix.project }}
@@ -157,12 +131,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0100"
           telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-

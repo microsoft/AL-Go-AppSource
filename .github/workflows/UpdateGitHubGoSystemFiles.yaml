@@ -4,11 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       templateUrl:
-<<<<<<< HEAD
-        description: Template Repository URL (current is https://github.com/microsoft/AL-Go-AppSource@preview)
-=======
         description: Template Repository URL (current is https://github.com/microsoft/AL-Go-AppSource@v2.0)
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         required: false
         default: ''
       directCommit:
@@ -32,30 +28,18 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0098"
 
       - name: Read settings
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSettings@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSettings@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           get: KeyVaultName,GhTokenWorkflowSecretName,TemplateUrl
 
       - name: Read secrets
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSecrets@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSecrets@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         env:
           secrets: ${{ toJson(secrets) }}
         with:
@@ -74,12 +58,6 @@ jobs:
           }
 
       - name: Calculate DirectCommit
-<<<<<<< HEAD
-        run: |
-          $directCommit = '${{ github.event.inputs.directCommit }}'
-          Write-Host '${{ github.event_name }}'
-          if ('${{ github.event_name }}' -eq 'schedule') {
-=======
         env:
           directCommit: ${{ github.event.inputs.directCommit }}
           eventName: ${{ github.event_name }}
@@ -87,43 +65,23 @@ jobs:
           $directCommit = $ENV:directCommit
           Write-Host $ENV:eventName
           if ($ENV:eventName -eq 'schedule') {
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
             Write-Host "Running Update AL-Go System Files on a schedule. Setting DirectCommit = Y"
             $directCommit = 'Y'
           }
           Add-Content -Path $env:GITHUB_ENV -Value "DirectCommit=$directCommit"
 
       - name: Update AL-Go system files
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/CheckForUpdates@preview
-=======
         uses: microsoft/AL-Go-Actions/CheckForUpdates@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           token: ${{ env.ghTokenWorkflow }}
           Update: Y
           templateUrl: ${{ env.TemplateUrl }}
           directCommit: ${{ env.directCommit }}
-<<<<<<< HEAD
-
-  PostProcess:
-    if: always()
-    runs-on: [ windows-latest ]
-    needs: [ Initialization, Update ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Finalize the workflow
-        id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
-=======
 
       - name: Finalize the workflow
         if: always()
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0098"
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}

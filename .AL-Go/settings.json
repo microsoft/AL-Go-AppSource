@@ -8,6 +8,7 @@
     "storageContextSecretName": "StorageContext",
     "insiderSasTokenSecretName": "InsiderToken",
     "ghTokenWorkflowSecretName": "ghTokenWorkflow",
+    "generateDependencyArtifact": true,
     "AppSourceCopMandatoryAffixes":  [
         "NAVX"
     ],
@@ -26,5 +27,5 @@
             "AuthTokenSecret": "githubToken"
         }
     ],
-    "versioningStrategy": 16
+    "versioningStrategy": 0
 }

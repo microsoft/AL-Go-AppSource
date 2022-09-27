@@ -32,29 +32,17 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0093"
 
       - name: Read settings
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSettings@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSettings@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
 
       - name: Read secrets
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/ReadSecrets@preview
-=======
         uses: microsoft/AL-Go-Actions/ReadSecrets@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         env:
           secrets: ${{ toJson(secrets) }}
         with:
@@ -72,11 +60,7 @@ jobs:
             Write-Host "AdminCenterApiCredentials not provided, initiating Device Code flow"
             $ALGoHelperPath = "$([System.IO.Path]::GetTempFileName()).ps1"
             $webClient = New-Object System.Net.WebClient
-<<<<<<< HEAD
-            $webClient.DownloadFile('https://raw.githubusercontent.com/microsoft/AL-Go-Actions/preview/AL-Go-Helper.ps1', $ALGoHelperPath)
-=======
             $webClient.DownloadFile('https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v2.0/AL-Go-Helper.ps1', $ALGoHelperPath)
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
             . $ALGoHelperPath
             $BcContainerHelperPath = DownloadAndImportBcContainerHelper -baseFolder $ENV:GITHUB_WORKSPACE
             $authContext = New-BcAuthContext -includeDeviceLogin -deviceLoginTimeout ([TimeSpan]::FromSeconds(0))
@@ -86,11 +70,7 @@ jobs:
           }
 
       - name: Create Development Environment
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/CreateDevelopmentEnvironment@preview
-=======
         uses: microsoft/AL-Go-Actions/CreateDevelopmentEnvironment@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           environmentName: ${{ github.event.inputs.environmentName }}
@@ -99,13 +79,8 @@ jobs:
           adminCenterApiCredentials: ${{ env.adminCenterApiCredentials }} 
 
       - name: Finalize the workflow
-<<<<<<< HEAD
-        id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
-=======
         if: always()
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0093"
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}

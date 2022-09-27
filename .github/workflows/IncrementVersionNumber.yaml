@@ -32,20 +32,12 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0096"
 
       - name: Increment Version Number
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/IncrementVersionNumber@preview
-=======
         uses: microsoft/AL-Go-Actions/IncrementVersionNumber@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           project: ${{ github.event.inputs.project }}
@@ -53,13 +45,8 @@ jobs:
           directCommit: ${{ github.event.inputs.directCommit }}
   
       - name: Finalize the workflow
-<<<<<<< HEAD
-        id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
-=======
         if: always()
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0096"
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}

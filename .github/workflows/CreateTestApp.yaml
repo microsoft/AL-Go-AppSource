@@ -44,20 +44,12 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
-=======
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0095"
 
       - name: Creating a new test app
-<<<<<<< HEAD
-        uses: microsoft/AL-Go-Actions/CreateApp@preview
-=======
         uses: microsoft/AL-Go-Actions/CreateApp@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           project: ${{ github.event.inputs.project }}
@@ -69,13 +61,8 @@ jobs:
           directCommit: ${{ github.event.inputs.directCommit }}
 
       - name: Finalize the workflow
-<<<<<<< HEAD
-        id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
-=======
         if: always()
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
->>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0095"
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
