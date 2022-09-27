@@ -14,6 +14,12 @@ Set-StrictMode -Version 2.0
 
 $pshost = Get-Host
 if ($pshost.Name -eq "Visual Studio Code Host") {
+    $executionPolicy = Get-ExecutionPolicy -Scope CurrentUser
+    Write-Host "Execution Policy is $executionPolicy"
+    if ($executionPolicy -eq "Restricted") {
+        Write-Host "Changing Execution Policy to RemoteSigned"
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    }
     if ($MyInvocation.InvocationName -eq '.' -or $MyInvocation.Line -eq '') {
         $scriptName = Join-Path $PSScriptRoot $MyInvocation.MyCommand
     }
@@ -44,13 +50,13 @@ $baseFolder = Join-Path $PSScriptRoot ".." -Resolve
 
 Clear-Host
 Write-Host -ForegroundColor Yellow @'
-   _____ _                 _   _____             ______            
-  / ____| |               | | |  __ \           |  ____|           
+   _____ _                 _   _____             ______
+  / ____| |               | | |  __ \           |  ____|
  | |    | | ___  _   _  __| | | |  | | _____   __ |__   _ ____   __
  | |    | |/ _ \| | | |/ _` | | |  | |/ _ \ \ / /  __| | '_ \ \ / /
- | |____| | (_) | |_| | (_| | | |__| |  __/\ V /| |____| | | \ V / 
-  \_____|_|\___/ \__,_|\__,_| |_____/ \___| \_/ |______|_| |_|\_/  
-                                                                   
+ | |____| | (_) | |_| | (_| | | |__| |  __/\ V /| |____| | | \ V /
+  \_____|_|\___/ \__,_|\__,_| |_____/ \___| \_/ |______|_| |_|\_/
+
 '@
 
 Write-Host @'

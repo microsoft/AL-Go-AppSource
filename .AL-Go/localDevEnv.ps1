@@ -17,6 +17,12 @@ Set-StrictMode -Version 2.0
 
 $pshost = Get-Host
 if ($pshost.Name -eq "Visual Studio Code Host") {
+    $executionPolicy = Get-ExecutionPolicy -Scope CurrentUser
+    Write-Host "Execution Policy is $executionPolicy"
+    if ($executionPolicy -eq "Restricted") {
+        Write-Host "Changing Execution Policy to RemoteSigned"
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    }
     if ($MyInvocation.InvocationName -eq '.' -or $MyInvocation.Line -eq '') {
         $scriptName = Join-Path $PSScriptRoot $MyInvocation.MyCommand
     }
@@ -56,13 +62,13 @@ $baseFolder = Join-Path $PSScriptRoot ".." -Resolve
 
 Clear-Host
 Write-Host -ForegroundColor Yellow @'
-  _                     _   _____             ______            
- | |                   | | |  __ \           |  ____|           
+  _                     _   _____             ______
+ | |                   | | |  __ \           |  ____|
  | |     ___   ___ __ _| | | |  | | _____   __ |__   _ ____   __
  | |    / _ \ / __/ _` | | | |  | |/ _ \ \ / /  __| | '_ \ \ / /
- | |____ (_) | (__ (_| | | | |__| |  __/\ V /| |____| | | \ V / 
- |______\___/ \___\__,_|_| |_____/ \___| \_/ |______|_| |_|\_/  
-                                                                
+ | |____ (_) | (__ (_| | | | |__| |  __/\ V /| |____| | | \ V /
+ |______\___/ \___\__,_|_| |_____/ \___| \_/ |______|_| |_|\_/
+
 '@
 
 Write-Host @'
@@ -79,14 +85,13 @@ The script will also modify launch.json to have a Local Sandbox configuration po
 $settings = ReadSettings -baseFolder $baseFolder -userName $env:USERNAME
 
 Write-Host "Checking System Requirements"
-$dockerService = Get-Service docker -ErrorAction SilentlyContinue
-if (-not $dockerService -or $dockerService.Status -ne "Running") {
-    throw "Creating a local development enviroment requires you to have Docker installed and running."
+$dockerProcess = (Get-Process "dockerd" -ErrorAction Ignore)
+if (!($dockerProcess)) {
+    Write-Host -ForegroundColor Red "Dockerd process not found. Docker might not be started, not installed or not running Windows Containers."
 }
-
 if ($settings.keyVaultName) {
     if (-not (Get-Module -ListAvailable -Name 'Az.KeyVault')) {
-        throw "A keyvault name is defined in Settings, you need to have the Az.KeyVault PowerShell module installed (use Install-Module az) or you can set the keyVaultName to an empty string in the user settings file ($($ENV:UserName).Settings.json)."
+        Write-Host -ForegroundColor Red "A keyvault name is defined in Settings, you need to have the Az.KeyVault PowerShell module installed (use Install-Module az) or you can set the keyVaultName to an empty string in the user settings file ($($ENV:UserName).Settings.json)."
     }
 }
 

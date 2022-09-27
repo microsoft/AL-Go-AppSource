@@ -6,7 +6,7 @@ on:
       project:
         description: Project name if the repository is setup for multiple projects (* for all projects)
         required: false
-        default: '.'
+        default: '*'
       versionNumber:
         description: Updated Version Number. Use Major.Minor for absolute change, use +Major.Minor for incremental change.
         required: true
@@ -24,44 +24,42 @@ defaults:
     shell: PowerShell
 
 jobs:
-  Initialization:
+  IncrementVersionNumber:
     runs-on: [ windows-latest ]
-    outputs:
-      telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Initialize the workflow
         id: init
+<<<<<<< HEAD
         uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
+=======
+        uses: microsoft/AL-Go-Actions/WorkflowInitialize@v2.0
+>>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0096"
 
-  Update:
-    runs-on: [ windows-latest ]
-    needs: [ Initialization ]
-
-    steps:
       - name: Increment Version Number
+<<<<<<< HEAD
         uses: microsoft/AL-Go-Actions/IncrementVersionNumber@preview
+=======
+        uses: microsoft/AL-Go-Actions/IncrementVersionNumber@v2.0
+>>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
-          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           project: ${{ github.event.inputs.project }}
           versionNumber: ${{ github.event.inputs.versionNumber }}
           directCommit: ${{ github.event.inputs.directCommit }}
   
-  PostProcess:
-    if: always()
-    runs-on: [ windows-latest ]
-    needs: [ Initialization, Update ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Finalize the workflow
+<<<<<<< HEAD
         id: PostProcess
         uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
+=======
+        if: always()
+        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v2.0
+>>>>>>> 95de05c4a8c908def03cf21e7f32e451e975d3a2
         with:
           eventId: "DO0096"
-          telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
