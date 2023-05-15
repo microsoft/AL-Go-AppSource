@@ -39,7 +39,7 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@v3.1
+        uses: microsoft/AL-Go-Actions/WorkflowInitialize@PPPreview
         with:
           shell: powershell
           eventId: "DO0103"
@@ -53,13 +53,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Read settings
-        uses: microsoft/AL-Go-Actions/ReadSettings@v3.1
+        uses: microsoft/AL-Go-Actions/ReadSettings@PPPreview
         with:
           shell: powershell
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
 
       - name: Read secrets
-        uses: microsoft/AL-Go-Actions/ReadSecrets@v3.1
+        uses: microsoft/AL-Go-Actions/ReadSecrets@PPPreview
         env:
           secrets: ${{ toJson(secrets) }}
         with:
@@ -78,7 +78,7 @@ jobs:
           Write-Host "deliveryContext=$deliveryContext"
 
       - name: Deliver
-        uses: microsoft/AL-Go-Actions/Deliver@v3.1
+        uses: microsoft/AL-Go-Actions/Deliver@PPPreview
         env:
           deliveryContext: '${{ steps.deliveryContext.outputs.deliveryContext }}'
         with:
@@ -100,7 +100,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@v3.1
+        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@PPPreview
         with:
           shell: powershell
           eventId: "DO0103"
