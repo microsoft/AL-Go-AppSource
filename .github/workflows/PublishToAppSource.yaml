@@ -39,7 +39,7 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@preview
+        uses: microsoft/AL-Go/Actions/WorkflowInitialize@d15c25e25c4b0033da9f99970e3a420e231f7fbc
         with:
           shell: powershell
           eventId: "DO0103"
@@ -53,32 +53,33 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Read settings
-        uses: microsoft/AL-Go-Actions/ReadSettings@preview
+        uses: microsoft/AL-Go/Actions/ReadSettings@d15c25e25c4b0033da9f99970e3a420e231f7fbc
         with:
           shell: powershell
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
 
       - name: Read secrets
-        uses: microsoft/AL-Go-Actions/ReadSecrets@preview
-        env:
-          secrets: ${{ toJson(secrets) }}
+        uses: microsoft/AL-Go/Actions/ReadSecrets@d15c25e25c4b0033da9f99970e3a420e231f7fbc
         with:
           shell: powershell
-          settingsJson: ${{ env.Settings }}
-          secrets: 'appSourceContext'
+          gitHubSecrets: ${{ toJson(secrets) }}
+          getSecrets: 'appSourceContext'
 
       - name: DeliveryContext
         id: deliveryContext
         run: |
-          $ErrorActionPreference = "STOP"
-          Set-StrictMode -version 2.0
-          $contextName = 'appSourceContext'
-          $deliveryContext = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String([System.Environment]::GetEnvironmentVariable($contextName)))
-          Add-Content -Path $env:GITHUB_OUTPUT -Value "deliveryContext=$deliveryContext"
-          Write-Host "deliveryContext=$deliveryContext"
+          $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
+          $secrets = $env:Secrets | ConvertFrom-Json
+          if ($secrets.appSourceContext) {
+            $deliveryContext = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($secrets.appSourceContext))
+            Add-Content -Encoding UTF8 -Path $env:GITHUB_OUTPUT -Value "deliveryContext=$deliveryContext"
+          }
+          else {
+            throw "appSourceContext secret is missing"
+          }
 
       - name: Deliver
-        uses: microsoft/AL-Go-Actions/Deliver@preview
+        uses: microsoft/AL-Go/Actions/Deliver@d15c25e25c4b0033da9f99970e3a420e231f7fbc
         env:
           deliveryContext: '${{ steps.deliveryContext.outputs.deliveryContext }}'
         with:
@@ -100,7 +101,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@preview
+        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@d15c25e25c4b0033da9f99970e3a420e231f7fbc
         with:
           shell: powershell
           eventId: "DO0103"
