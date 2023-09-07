@@ -39,7 +39,7 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: microsoft/AL-Go/Actions/WorkflowInitialize@cd65fef534b14be11e4d0e3c9905869fad786d36
+        uses: microsoft/AL-Go/Actions/WorkflowInitialize@eabe480ba72260c6805e575f6bd03ac129367160
         with:
           shell: powershell
           eventId: "DO0103"
@@ -53,20 +53,22 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Read settings
-        uses: microsoft/AL-Go/Actions/ReadSettings@cd65fef534b14be11e4d0e3c9905869fad786d36
+        uses: microsoft/AL-Go/Actions/ReadSettings@eabe480ba72260c6805e575f6bd03ac129367160
         with:
           shell: powershell
-          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
 
       - name: Read secrets
-        uses: microsoft/AL-Go/Actions/ReadSecrets@cd65fef534b14be11e4d0e3c9905869fad786d36
+        id: ReadSecrets
+        uses: microsoft/AL-Go/Actions/ReadSecrets@eabe480ba72260c6805e575f6bd03ac129367160
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: 'appSourceContext'
 
       - name: Deliver
-        uses: microsoft/AL-Go/Actions/Deliver@cd65fef534b14be11e4d0e3c9905869fad786d36
+        uses: microsoft/AL-Go/Actions/Deliver@eabe480ba72260c6805e575f6bd03ac129367160
+        env:
+          Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
           shell: powershell
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
@@ -86,7 +88,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@cd65fef534b14be11e4d0e3c9905869fad786d36
+        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@eabe480ba72260c6805e575f6bd03ac129367160
         with:
           shell: powershell
           eventId: "DO0103"
