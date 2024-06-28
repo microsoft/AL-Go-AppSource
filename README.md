@@ -1,7 +1,7 @@
 # AL-Go AppSource App Template
 This template repository can be used for managing AppSource Apps for Business Central.
 
-[![image](https://github.com/microsoft/AL-Go-AppSource/assets/10775043/19b93ff7-5775-482c-9c70-651d1819b790)](https://github.com/new?template_name=AL-Go-AppSource&template_owner=microsoft)
+[![Use this template](https://github.com/microsoft/AL-Go/assets/10775043/ca1ecc85-2fd3-4ab5-a866-bd2e7e80259d)](https://github.com/new?template_name=AL-Go-AppSource&template_owner=microsoft)
 
 Please go to https://aka.ms/AL-Go to learn more.
 
