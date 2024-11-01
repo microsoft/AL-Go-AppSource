@@ -644,13 +644,13 @@ Setting the repo setting "runs-on" to "Ubuntu-Latest", followed by running Updat
 - appDependencyProbingPaths did not support multiple projects in the same repository for latestBuild dependencies
 - appDependencyProbingPaths with release=latestBuild only considered the last 30 artifacts
 - Use mutex around ReadSecrets to ensure that multiple agents on the same host doesn't clash
-- Add lfs when checking out files for CI/CD to support checking in dependencies
-- Continue on error with Deploy and Deliver
 
 ### CI/CD and Publish To New Environment
 
 - Base functionality for selecting a specific GitHub runner for an environment
 - Include dependencies artifacts when deploying (if generateDependencyArtifacts is true)
+- Add lfs when checking out files for CI/CD to support checking in dependencies
+- Continue on error with Deploy and Deliver
 
 ### localDevEnv.ps1 and cloudDevEnv.ps1
 
