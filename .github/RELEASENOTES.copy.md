@@ -4,7 +4,7 @@ Note that when using the preview version of AL-Go for GitHub, we recommend you U
 
 ### Deprecations
 
-- `cleanModePreProcessorSymbols` will be removed after April 1st 2025. Use [Conditional Settings](https://aka.ms/algosettings#conditional-settings) instead, specifying buildModes and the `preProcessorSymbols` setting. Read [this](./DEPRECATIONS.md) for more information.
+[- `cleanModePreProcessorSymbols` will be removed after April 1st 2025. Use [Conditional Settings](https://aka.ms/algosettings#conditional-settings) instead, specifying buildModes and the `preProcessorSymbols` setting. Read [this](./DEPRECATIONS.md) for more information.](https://github.com/microsoft/AL-Go-PTE/pull/101)
 
 ### Issues
 
