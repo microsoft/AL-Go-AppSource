@@ -1,0 +1,24 @@
+{
+    "id": "e1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    "name": "SecurityTestApp",
+    "publisher": "SecurityTest",
+    "version": "1.0.0.0",
+    "brief": "Security test application",
+    "description": "A minimal test application",
+    "privacyStatement": "",
+    "EULA": "",
+    "help": "",
+    "url": "",
+    "logo": "",
+    "dependencies": [],
+    "screenshots": [],
+    "platform": "22.0.0.0",
+    "runtime": "11.0",
+    "target": "Cloud",
+    "idRanges": [
+        {
+            "from": 50100,
+            "to": 50100
+        }
+    ]
+}
