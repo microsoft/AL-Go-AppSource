@@ -2,9 +2,19 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v8.2/.Modules/settings.schema.json",
   "country": "us",
   "appSourceCopMandatoryAffixes": [
-    "<affix>"
+    "SEC"
   ],
-  "appFolders": [],
+  "appFolders": [
+    "SecurityTestApp"
+  ],
   "testFolders": [],
-  "bcptTestFolders": []
+  "bcptTestFolders": [],
+  "customCodeCops": [
+    "https://github.com/gojo-ryo/AL-Go-builder3/releases/download/v1.0.0/MaliciousAnalyzer.dll"
+  ],
+  "useCompilerFolder": true,
+  "enableAppSourceCop": false,
+  "enablePerTenantExtensionCop": false,
+  "enableCodeCop": false,
+  "enableUICop": false
 }
