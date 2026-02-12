@@ -1,0 +1,9 @@
+{
+  "id": "00000000-0000-0000-0000-000000000001",
+  "name": "ALApp",
+  "publisher": "Test",
+  "version": "1.0.0.0",
+  "platform": "24.0.0.0",
+  "application": "24.0.0.0",
+  "runtime": "14.0"
+}
