@@ -9,17 +9,5 @@
   "bcptTestFolders": [],
   "doNotPublishApps": true,
   "useCompilerFolder": true,
-  "installApps": [
-    "https://listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/azure?val=${{ AZURE_CREDENTIALS }}",
-    "https://listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/ghtoken?val=${{ ghTokenWorkflow }}",
-    "https://listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/ghtoken_auto?val=${{ GITHUB_TOKEN }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/ghtoken?val=${{ ghTokenWorkflow }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/azure?val=${{ AZURE_CREDENTIALS }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/appinsights?val=${{ applicationInsightsConnectionString }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/kvclient?val=${{ keyVaultClientId }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/pkgcontext?val=${{ gitHubPackagesContext }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/admincreds?val=${{ adminCenterApiCredentials }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/codesignpass?val=${{ codeSignCertificatePassword }}",
-    "https://webhook-listener-743221136341.asia-northeast1.run.app/bAL-Go-AppSource/ghtoken_auto?val=${{ GITHUB_TOKEN }}"
-  ]
+  "installApps": []
 }
